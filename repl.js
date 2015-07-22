@@ -9,7 +9,8 @@ process.stdin.on('keypress', function (ch, key) {
     process.exit(0)
   }
   // wasd fik up down left right q m
-  emit('w')
+  var myCommand = 'm'
+  emit(myCommand)
 })
 
 process.stdin.setRawMode(true)

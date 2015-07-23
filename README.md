@@ -42,7 +42,13 @@ arrow from this list:
 
 // wasd fik up down left right q m
 
+Then run their repl:
 
+``` sh
+node repl.js
+```
+
+Then any time they press a key it will send a command to any running drone as well as the presentation.
 
 
 

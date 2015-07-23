@@ -8,7 +8,7 @@ var config = require('./config/common.json')
 var pubnub = PUBNUB.init(config.pubnub)
 
 var state = {
-  title: 'up'
+  title: 'down'
 }
 
 var tree = render(state)
@@ -16,11 +16,12 @@ var rootNode = createElement(tree)
 document.body.appendChild(rootNode)
 
 function render (state) {
+  var command = state.title.length <= 1 ? state.title : h('i.material-icons',
+    { style: { fontSize: '4em'}},
+    'keyboard_arrow_' + state.title
+  )
   return h('h1', { style: { textAlign: 'center' }}, [
-    h('i.material-icons', 
-      { style: { fontSize: '4em'}}, 
-      'keyboard_arrow_' + state.title
-    )
+    command
   ])
 }
 
@@ -29,15 +30,14 @@ function repaint (state) {
   var newTree = render(state);
   var patches = diff(tree, newTree);
   rootNode = patch(rootNode, patches);
-  tree = newTree;  
+  tree = newTree;
 }
 
 pubnub.subscribe({
   channel: 'commands',
   callback: function (e) {
+    console.log(e.action)
     state.title = e.action
-    repaint(state)  
+    repaint(state)
   }
 })
-
-

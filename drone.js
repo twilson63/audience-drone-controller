@@ -5,6 +5,13 @@ var d = new Drone()
 var STEPS = 2
 var ACTIVE = false
 
+
+function cooldown() {
+  ACTIVE = false;
+  setTimeout(function () {
+    ACTIVE = true;
+  }, STEPS * 12);
+}
 // NEW CODE BELOW HERE
 
 d.connect(function() {
@@ -23,6 +30,7 @@ d.connect(function() {
 });
 
 commands(function (c) {
+  if (ACTIVE && c) {
   if (c.action === 'm') {
     d.emergency();
     setTimeout(function () {
@@ -71,4 +79,5 @@ commands(function (c) {
     console.log('Initiated Landing Sequence...');
     d.land();
   }
+}
 })
